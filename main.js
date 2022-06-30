@@ -16,12 +16,14 @@ const passwordErr = document.querySelector('.passErr');
 const phoneNumErr = document.querySelector('.phonNumberErr')
 const webErr = document.querySelector('.webErr');
 const copyMsg = document.querySelector('.successMsg');
+const slugElem = document.querySelector('#slug');
+const slugShow = document.querySelector('.showSlug');
 
-const regExSpecialChar = /[ `!@#$ %^&*()_+\-=\[\]{};':"\\|,.<>\/? ~]/gi
-const emailValRegex = /\S+@\S+\.\S+/ig;
-const passValRegex = /[A-Za-z0-9_./@]/ig;
-const webValRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig
-const phoneNumberRegex = /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/ig
+const regExSpecialChar = /[ `!@#$ %^&*()_+\-=\[\]{};':"\\|,.<>\/? ~]/i
+const emailValRegex = /\S+@\S+\.\S+/i;
+const passValRegex = /[a-zA-Z0-9@\.\&\-\_]/i;
+const webValRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i
+const phoneNumberRegex = /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/i
 const phoneNumberPref = '+'+88;
 
 function gettingAllValue(){
@@ -31,6 +33,7 @@ function gettingAllValue(){
     const passValue = passwordElem.value;
     const webValue = webElem.value;  
     const phoneNumVal = phoneNumberPref+phoneNumberElem.value;
+    const slugSentences = slugElem.value;
 
     return{
         name : nameValue,
@@ -38,7 +41,8 @@ function gettingAllValue(){
         email : emailValue,
         password : passValue,
         web : webValue,
-        phoneNum : phoneNumVal
+        phoneNum : phoneNumVal,
+        slug : slugSentences
     }
 
     // console.log(nameValue);
@@ -125,12 +129,12 @@ function allValValid(name, username, email, password, webadd, phoneNum){
         // }, 4000)
     }else{
               
-        if(passValRegex.test(password)){
-            passwordErr.textContent = '';
-        }else{
-            
+        if(!passValRegex.test(password)){
             passwordErr.textContent = 'Give a strong password';
             passwordErr.style.color = 'red';
+        }else{          
+            passwordErr.textContent = '';
+            
         }
     }
     
@@ -179,6 +183,7 @@ function resetInput(name, username, email, password, webadd, phone){
         passwordElem.value = '';
         webElem.value = '';
         phoneNumberElem.value = '';
+        slugElem.value = '';
     }
     
 }
@@ -186,16 +191,26 @@ function resetInput(name, username, email, password, webadd, phone){
 formElem.addEventListener('submit', e => {
     e.preventDefault();
 
-    const {name, username, email, password, web, phoneNum} = gettingAllValue();
-    console.log(name, username, email, password, web, phoneNum);
+    const {name, username, email, password, web, phoneNum, slug} = gettingAllValue();
+    console.log(name, username, email, password, web, phoneNum, slug);
     // console.log(gettingAllValue());
     // console.log(name);
     
     allValValid(name, username, email, password, web, phoneNum);
+
+    const slugText = generatingSlug(slug);
+    slugShow.textContent = slugText;
+    slugShow.style.backgroundColor = 'lightblue';
+    slugShow.style.padding = '5px';
     
 
-    resetInput(name, username, email, password, web, phoneNum);
+    resetInput(name, username, email, password, web, phoneNum, slug);
 })
+
+function generatingSlug(slug){
+    let slugArr = slug.split(' ');
+    return slugArr.join('-');
+}
 
 genPassBtn.addEventListener('click', ()=> {
     const stronPass = generateStrongPass();
