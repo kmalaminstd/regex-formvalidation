@@ -4,6 +4,7 @@ const userNameElem = document.querySelector('#username');
 const emailElem = document.querySelector('#email');
 const passwordElem = document.querySelector('#password');
 const webElem = document.querySelector('#web');
+const phoneNumberElem = document.querySelector('#phonenumber');
 const generatePassElem = document.querySelector('.genPass');
 const genPassBtn = document.querySelector('.generatePass');
 const copyPassBtn = document.querySelector('.copyPass');
@@ -12,6 +13,7 @@ const nameErrElm = document.querySelector('.nameErr');
 let userNameErr = document.querySelector('.userErr');
 const emailErr = document.querySelector('.emailErr');
 const passwordErr = document.querySelector('.passErr');
+const phoneNumErr = document.querySelector('.phonNumberErr')
 const webErr = document.querySelector('.webErr');
 const copyMsg = document.querySelector('.successMsg');
 
@@ -19,20 +21,24 @@ const regExSpecialChar = /[ `!@#$ %^&*()_+\-=\[\]{};':"\\|,.<>\/? ~]/gi
 const emailValRegex = /\S+@\S+\.\S+/ig;
 const passValRegex = /[A-Za-z0-9_./@]/ig;
 const webValRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig
+const phoneNumberRegex = /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/ig
+const phoneNumberPref = '+'+88;
 
 function gettingAllValue(){
     const nameValue = nameElem.value;
     const userNameValue = userNameElem.value;
     const emailValue = emailElem.value;
     const passValue = passwordElem.value;
-    const webValue = webElem.value;
+    const webValue = webElem.value;  
+    const phoneNumVal = phoneNumberPref+phoneNumberElem.value;
 
     return{
         name : nameValue,
         username : userNameValue, 
         email : emailValue,
         password : passValue,
-        web : webValue
+        web : webValue,
+        phoneNum : phoneNumVal
     }
 
     // console.log(nameValue);
@@ -41,7 +47,7 @@ function gettingAllValue(){
     // resetInput(nameValue, userNameValue, emailValue, passValue, webValue);
 }
 
-function allValValid(name, username, email, password, webadd){
+function allValValid(name, username, email, password, webadd, phoneNum){
 
     // name field
     if(!name){
@@ -119,16 +125,17 @@ function allValValid(name, username, email, password, webadd){
         // }, 4000)
     }else{
               
-        if(!passValRegex.test(password)){
+        if(passValRegex.test(password)){
+            passwordErr.textContent = '';
+        }else{
+            
             passwordErr.textContent = 'Give a strong password';
             passwordErr.style.color = 'red';
-        }else{
-            passwordErr.textContent = '';
         }
     }
     
     
-
+    // web address validate field
     if(!webadd){
         webErr.textContent = 'Give a website URL';
         webErr.style.backgroundColor = 'red';
@@ -145,18 +152,33 @@ function allValValid(name, username, email, password, webadd){
             webErr.textContent = '';
         }
     }
+
+    // bd phone Number validate field
+    if(!phoneNum){
+        phoneNumErr.textContent = 'Please give a phone number';
+        phoneNumErr.style.backgroundColor = 'red';
+    }else{
+        
+        if(phoneNumberRegex.test(phoneNum)){
+            phoneNumErr.textContent = ''
+        }else{
+            phoneNumErr.textContent = 'Invalid phone number';
+            phoneNumErr.style.color = 'red';
+        }
+    }
     
 
     
 }
 
-function resetInput(name, username, email, password, webadd){
-    if(name && username && email && password && webadd){
+function resetInput(name, username, email, password, webadd, phone){
+    if(name && username && email && password && webadd && phone){
         nameElem.value = '';
         userNameElem.value = '';
         emailElem.value = '';
         passwordElem.value = '';
         webElem.value = '';
+        phoneNumberElem.value = '';
     }
     
 }
@@ -164,15 +186,15 @@ function resetInput(name, username, email, password, webadd){
 formElem.addEventListener('submit', e => {
     e.preventDefault();
 
-    const {name, username, email, password, web} = gettingAllValue();
-    console.log(name, username, email, password, web);
+    const {name, username, email, password, web, phoneNum} = gettingAllValue();
+    console.log(name, username, email, password, web, phoneNum);
     // console.log(gettingAllValue());
     // console.log(name);
     
-    allValValid(name, username, email, password, web);
+    allValValid(name, username, email, password, web, phoneNum);
     
 
-    resetInput(name, username, email, password, web);
+    resetInput(name, username, email, password, web, phoneNum);
 })
 
 genPassBtn.addEventListener('click', ()=> {
