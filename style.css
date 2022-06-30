@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-color: aliceblue;
+}
+
+button{
+    cursor: pointer;
+}
+
+form{
+    width: 450px;
+    height: auto;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 8px 10px;
+}
+
+input{
+    margin-bottom: 10px;
+    margin-top: 5px;
+    width: 100%;
+    padding: 5px 8px;
+    outline: none;
+    border: 1px solid lightgray;
+}
+
+.genPassStyle{
+    background: lightgreen;
+    padding: 5px;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.subBtn{
+    margin: 10px 0;
+}
+
+button:not([type="submit"]){
+    padding: 3px 15px;
+    outline: none;
+    border: 1px solid lightgreen;
+    background: lightblue;
+}
+
+button[type="submit"]{
+    padding: 8px 20px;
+    background-color: aqua;
+    outline: none;
+    border: 1px solid lightgray;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+}
+
+button[type="submit"]:active{
+    background-color: lightgreen;
+}
+
+.allError{
+    background-color: red;
+    padding: 5px 8px;
+    margin-bottom: 8px;
+    display: none;
+}
+
+.genpass{
+    width: 450px;
+    margin: 10px auto;
+    background-color: #fff;
+    box-shadow: 0px 4px 2px 1px #fff;
+    padding: 8px 10px;
+}
+
+.copyPass{
+    display: none;
+}

@@ -1,0 +1,17 @@
+
+
+
+// strong password 
+// must conatains small letters, capital letters, numbers, special character, length(8)
+
+// ok name (must be more than 5 characters, must not conatain any special characters)
+// ok username (must be 5 characters)
+// ok email (must be valid)
+// bangladeshi phone number 
+// slug(-,_, numbers, letter)
+// ok generate strong password - copy system
+    -- buttn 1 generate password
+    -- copy password
+// validate strong password
+// website address url
+// submit
